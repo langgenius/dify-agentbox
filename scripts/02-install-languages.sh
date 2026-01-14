@@ -3,8 +3,16 @@ set -ex
 
 echo "[agentbox] Step 2: install runtimes (miniconda/node/go/rust)"
 
+# Detect architecture (x86_64 or aarch64)
+ARCH=$(uname -m)
+case "$ARCH" in
+  x86_64) CONDA_ARCH="x86_64"; GO_ARCH="amd64" ;;
+  aarch64|arm64) CONDA_ARCH="aarch64"; GO_ARCH="arm64" ;;
+  *) echo "Unsupported architecture: $ARCH" >&2; exit 1 ;;
+esac
+
 # Install Miniconda (replaces micromamba)
-curl -fsSLo /tmp/miniconda.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+curl -fsSLo /tmp/miniconda.sh "https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-${CONDA_ARCH}.sh"
 bash /tmp/miniconda.sh -b -p /opt/conda
 rm /tmp/miniconda.sh
 /opt/conda/bin/conda config --set always_yes yes --set changeps1 no
@@ -15,9 +23,9 @@ curl -fsSL https://deb.nodesource.com/setup_{{ languages.nodejs.version }}.x | b
 apt-get install -y --no-install-recommends nodejs
 
 # Install Go
-wget -q https://go.dev/dl/go{{ languages.go.version }}.linux-amd64.tar.gz
-tar -C /usr/local -xzf go{{ languages.go.version }}.linux-amd64.tar.gz
-rm go{{ languages.go.version }}.linux-amd64.tar.gz
+wget -q "https://go.dev/dl/go{{ languages.go.version }}.linux-${GO_ARCH}.tar.gz"
+tar -C /usr/local -xzf "go{{ languages.go.version }}.linux-${GO_ARCH}.tar.gz"
+rm "go{{ languages.go.version }}.linux-${GO_ARCH}.tar.gz"
 
 # Install Rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain {{ languages.rust.version }}

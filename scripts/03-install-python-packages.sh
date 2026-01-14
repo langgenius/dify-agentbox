@@ -20,5 +20,6 @@ echo "[agentbox] Step 3: install Python env and packages"
 
 # Cleanup
 /opt/conda/bin/conda clean --all -y
+/opt/conda/bin/pip cache purge || true
 
 echo "[agentbox] Step 3 complete"
