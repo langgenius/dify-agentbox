@@ -27,6 +27,8 @@ Instead of managing separate containers or installing dependencies on-the-fly, A
 docker run -it --rm -v $(pwd):/workspace langgenius/dify-agentbox:latest
 ```
 
+Multi-arch images (amd64/arm64) are published and tagged with the full git SHA plus `latest`.
+
 ## Use Cases
 
 - **AI Agent Execution**: Run LLM-generated code safely in isolated environments
@@ -65,7 +67,7 @@ python_packages:
     version: "~=2.2.3"
 ```
 
-**2. Render Dockerfile locally**
+**2. Render & build locally (multi-arch)**
 
 ```bash
 # Install dependencies
@@ -74,15 +76,16 @@ uv sync
 # Render Dockerfile
 uv run python build.py
 
-# Build the image with Docker
-docker build -t langgenius/dify-agentbox:dev .
+# Build multi-arch image with git SHA tag
+TAG=$(git rev-parse --short HEAD)
+docker buildx build --platform linux/amd64,linux/arm64 -t langgenius/dify-agentbox:${TAG} .
 ```
 
 **3. Test Changes**
 
 ```bash
 # Run the image
-docker run -it --rm langgenius/dify-agentbox:dev
+docker run -it --rm langgenius/dify-agentbox:${TAG}
 
 # Verify installations
 python --version

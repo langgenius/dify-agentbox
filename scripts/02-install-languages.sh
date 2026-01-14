@@ -16,9 +16,9 @@ curl -fsSLo /tmp/miniconda.sh "https://repo.anaconda.com/miniconda/Miniconda3-la
 bash /tmp/miniconda.sh -b -p /opt/conda
 rm /tmp/miniconda.sh
 /opt/conda/bin/conda config --set always_yes yes --set changeps1 no
-/opt/conda/bin/conda update -n base -c defaults conda
 /opt/conda/bin/conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main
 /opt/conda/bin/conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r
+/opt/conda/bin/conda update -n base -c defaults conda
 
 # Install Node.js
 curl -fsSL https://deb.nodesource.com/setup_{{ languages.nodejs.version }}.x | bash -
