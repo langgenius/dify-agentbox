@@ -9,7 +9,8 @@ def strip_shebang(text: str) -> str:
     lines = text.splitlines()
     if lines and lines[0].startswith("#!"):
         lines = lines[1:]
-    return "\n".join(lines).strip() + "\n"
+    # Preserve content, only trim trailing newlines to avoid heredoc collapse
+    return "\n".join(lines).rstrip("\n") + "\n"
 
 
 def load_script(path: Path) -> str:
