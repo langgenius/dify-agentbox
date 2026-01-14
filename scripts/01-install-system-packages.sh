@@ -1,6 +1,8 @@
 #!/bin/bash
 set -ex
 
+echo "[agentbox] Step 1: install system packages"
+
 # Install all system packages
 apt-get update && apt-get install -y --no-install-recommends \
     {% for pkg in system_packages.essential -%}
@@ -22,3 +24,5 @@ apt-get update && apt-get install -y --no-install-recommends \
 
 apt-get clean
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+echo "[agentbox] Step 1 complete"

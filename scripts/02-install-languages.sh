@@ -1,6 +1,8 @@
 #!/bin/bash
 set -ex
 
+echo "[agentbox] Step 2: install runtimes (micromamba/node/go/rust)"
+
 # Install Micromamba
 curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj -C /usr/local bin/micromamba
 mkdir -p /opt/conda
@@ -21,3 +23,5 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --defaul
 # Cleanup
 apt-get clean
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+echo "[agentbox] Step 2 complete"

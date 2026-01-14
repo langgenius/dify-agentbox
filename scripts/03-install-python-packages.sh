@@ -1,6 +1,8 @@
 #!/bin/bash
 set -ex
 
+echo "[agentbox] Step 3: install Python env and packages"
+
 # Create base environment with Python
 /usr/local/bin/micromamba install -y -n base -c conda-forge \
     python={{ languages.python.version }} \
@@ -18,3 +20,5 @@ set -ex
 
 # Cleanup
 /usr/local/bin/micromamba clean --all --yes
+
+echo "[agentbox] Step 3 complete"

@@ -1,6 +1,8 @@
 #!/bin/bash
 set -ex
 
+echo "[agentbox] Step 6: configure root + Playwright"
+
 # Install Playwright system dependencies
 apt-get update
 apt-get install -y --no-install-recommends \
@@ -54,3 +56,5 @@ echo 'micromamba activate base 2>/dev/null || true' >> /root/.bashrc
 # Clean up system packages
 apt-get clean
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+echo "[agentbox] Step 6 complete"

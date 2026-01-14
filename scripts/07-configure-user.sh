@@ -1,6 +1,8 @@
 #!/bin/bash
 set -ex
 
+echo "[agentbox] Step 7: configure user shell"
+
 # Initialize micromamba for user
 /usr/local/bin/micromamba shell init -s bash -p /opt/conda
 
@@ -11,3 +13,5 @@ echo 'export GOPATH=/home/{{ user.name }}/go' >> /home/{{ user.name }}/.bashrc
 echo 'export GOBIN=/home/{{ user.name }}/go/bin' >> /home/{{ user.name }}/.bashrc
 echo 'eval "$(/usr/local/bin/micromamba shell hook --shell bash)"' >> /home/{{ user.name }}/.bashrc
 echo 'micromamba activate base 2>/dev/null || true' >> /home/{{ user.name }}/.bashrc
+
+echo "[agentbox] Step 7 complete"
