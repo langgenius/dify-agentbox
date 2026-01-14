@@ -18,7 +18,7 @@ rm -rf /var/lib/apt/lists/*
 # Install Playwright browsers in shared location accessible to all users
 export PLAYWRIGHT_BROWSERS_PATH=/opt/playwright-browsers
 mkdir -p /opt/playwright-browsers
-/usr/local/bin/micromamba run -n base playwright install --with-deps {{ playwright.browsers | join(' ') }}
+/opt/conda/bin/playwright install --with-deps {{ playwright.browsers | join(' ') }}
 
 # Set proper permissions for shared access
 chmod -R 755 /opt/playwright-browsers
@@ -44,14 +44,14 @@ echo 'export PATH="/usr/bin:/bin:/usr/sbin:/sbin:$PATH"' >> /etc/environment
 echo 'export PATH="/usr/bin:/bin:/usr/sbin:/sbin:$PATH"' >> /etc/bash.bashrc
 
 # Set up conda environment activation for all users
-echo 'eval "$(/usr/local/bin/micromamba shell hook --shell bash)"' >> /etc/bash.bashrc
-echo 'micromamba activate base 2>/dev/null || true' >> /etc/bash.bashrc
+echo '. /opt/conda/etc/profile.d/conda.sh' >> /etc/bash.bashrc
+echo 'conda activate base 2>/dev/null || true' >> /etc/bash.bashrc
 
 # Set up environment for root user
 echo 'export PATH="/usr/bin:/bin:/usr/sbin:/sbin:/opt/conda/bin:/usr/local/go/bin:$PATH"' >> /root/.bashrc
 echo 'export PLAYWRIGHT_BROWSERS_PATH=/opt/playwright-browsers' >> /root/.bashrc
-echo 'eval "$(/usr/local/bin/micromamba shell hook --shell bash)"' >> /root/.bashrc
-echo 'micromamba activate base 2>/dev/null || true' >> /root/.bashrc
+echo '. /opt/conda/etc/profile.d/conda.sh' >> /root/.bashrc
+echo 'conda activate base 2>/dev/null || true' >> /root/.bashrc
 
 # Clean up system packages
 apt-get clean

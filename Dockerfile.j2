@@ -22,8 +22,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
 # Environment variables
 # ============================================================================
 
-ENV MAMBA_ROOT_PREFIX=/opt/conda \
-    GOPATH=/home/{{ user.name }}/go \
+ENV GOPATH=/home/{{ user.name }}/go \
     GOBIN=/home/{{ user.name }}/go/bin \
     PLAYWRIGHT_BROWSERS_PATH=/opt/playwright-browsers \
     PATH=/opt/conda/bin:/usr/local/go/bin:/home/{{ user.name }}/.cargo/bin:/home/{{ user.name }}/go/bin:$PATH
