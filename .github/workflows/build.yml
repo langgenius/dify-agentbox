@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
 
 env:
-  REGISTRY_IMAGE: dify/agentbox
+  REGISTRY_IMAGE: langgenius/dify-agentbox
 
 jobs:
   build:

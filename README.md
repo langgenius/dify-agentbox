@@ -24,7 +24,7 @@ Instead of managing separate containers or installing dependencies on-the-fly, A
 ## Quick Start
 
 ```bash
-docker run -it --rm -v $(pwd):/workspace dify/agentbox:latest
+docker run -it --rm -v $(pwd):/workspace langgenius/dify-agentbox:latest
 ```
 
 ## Use Cases
@@ -75,14 +75,14 @@ uv sync
 uv run python build.py
 
 # Build the image with Docker
-docker build -t dify/agentbox:dev .
+docker build -t langgenius/dify-agentbox:dev .
 ```
 
 **3. Test Changes**
 
 ```bash
 # Run the image
-docker run -it --rm dify/agentbox:dev
+docker run -it --rm langgenius/dify-agentbox:dev
 
 # Verify installations
 python --version
