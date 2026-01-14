@@ -111,6 +111,7 @@ system_packages:
     - uuid-dev
     - libsecret-1-dev
     - libgdiplus
+    - libcairo2-dev
     - libsqlite3-dev
     - default-libmysqlclient-dev
     - unixodbc-dev
