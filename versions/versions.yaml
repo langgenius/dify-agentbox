@@ -128,7 +128,6 @@ system_packages:
     - zip
     - unzip
     - unrar
-    - rar
   
   # Media tools
   media:
