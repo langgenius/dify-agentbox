@@ -25,9 +25,15 @@ curl -fsSL https://deb.nodesource.com/setup_{{ languages.nodejs.version }}.x | b
 apt-get install -y --no-install-recommends nodejs
 
 # Install Go
-wget -q "https://go.dev/dl/go{{ languages.go.version }}.linux-${GO_ARCH}.tar.gz"
-tar -C /usr/local -xzf "go{{ languages.go.version }}.linux-${GO_ARCH}.tar.gz"
-rm "go{{ languages.go.version }}.linux-${GO_ARCH}.tar.gz"
+GO_VER="{{ languages.go.version }}"
+if [[ "$GO_VER" != *.*.* ]]; then
+  GO_DL_VER="${GO_VER}.0"
+else
+  GO_DL_VER="$GO_VER"
+fi
+wget -q "https://go.dev/dl/go${GO_DL_VER}.linux-${GO_ARCH}.tar.gz"
+tar -C /usr/local -xzf "go${GO_DL_VER}.linux-${GO_ARCH}.tar.gz"
+rm "go${GO_DL_VER}.linux-${GO_ARCH}.tar.gz"
 
 # Install Rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain {{ languages.rust.version }}
@@ -35,7 +41,5 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --defaul
 # Cleanup
 apt-get clean
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-echo "[agentbox] Step 2 complete"
 
 echo "[agentbox] Step 2 complete"
