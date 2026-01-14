@@ -1,0 +1,49 @@
+# Dify AgentBox - All-in-one Development Environment
+# Generated from Dockerfile.j2
+# Base: {{ base.image }}
+
+FROM {{ base.image }}
+
+SHELL ["/bin/bash", "-c"]
+
+# Prevent interactive prompts and set locale
+ENV DEBIAN_FRONTEND=noninteractive \
+    LANG=C.UTF-8 \
+    LC_ALL=C.UTF-8 \
+    PATH=/usr/local/go/bin:/opt/conda/bin:/usr/local/bin:/usr/bin:/bin:$PATH
+
+# ============================================================================
+# Install all dependencies and configure system (single RUN layer)
+# ============================================================================
+
+{{ install_script }}
+
+# ============================================================================
+# Environment variables
+# ============================================================================
+
+ENV MAMBA_ROOT_PREFIX=/opt/conda \
+    GOPATH=/home/{{ user.name }}/go \
+    GOBIN=/home/{{ user.name }}/go/bin \
+    PLAYWRIGHT_BROWSERS_PATH=/opt/playwright-browsers \
+    PATH=/opt/conda/bin:/usr/local/go/bin:/home/{{ user.name }}/.cargo/bin:/home/{{ user.name }}/go/bin:$PATH
+
+# ============================================================================
+# Configure user environment
+# ============================================================================
+
+USER {{ user.name }}
+{{ configure_user_script }}
+
+# ============================================================================
+# Final configuration
+# ============================================================================
+
+WORKDIR {{ workdir }}
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD python --version && node --version && go version && ruby --version && rustc --version
+
+# Default command
+CMD ["/bin/bash"]

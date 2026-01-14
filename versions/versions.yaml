@@ -1,0 +1,160 @@
+# Dify AgentBox Version Configuration
+# This file defines all package versions and dependencies for the agentbox image
+
+base:
+  ubuntu: "24.04"
+  image: "ubuntu:24.04"
+
+# Programming Languages & Runtimes
+languages:
+  python:
+    version: "3.12"
+    pip_version: "latest"
+  nodejs:
+    version: "20"  # LTS
+  go:
+    version: "1.22"
+  ruby:
+    version: "3.2"
+  rust:
+    version: "1.75"
+
+# Micromamba Configuration
+micromamba:
+  version: "1.5.8"
+  conda_forge: true
+
+# Python Packages (installed via micromamba/pip)
+python_packages:
+  # Data processing
+  - name: "pandas[excel,html,xml]"
+    version: "~=2.2.3"
+  - name: "numpy"
+    version: "latest"
+  
+  # Document processing
+  - name: "markdown"
+    version: ">=3.10"
+  - name: "xhtml2pdf"
+    version: "~=0.2.17"
+  - name: "python-pptx"
+    version: "~=1.0.2"
+  - name: "PyMuPDF"
+    version: "~=1.24.0"
+  - name: "pypandoc-binary"
+    version: "~=1.13"
+  
+  # Image processing
+  - name: "pillow"
+    version: "~=10.4.0"
+  
+  # Utilities
+  - name: "psutil"
+    version: "latest"
+  - name: "tenacity"
+    version: "latest"
+  - name: "html2text"
+    version: "latest"
+  - name: "jinja2"
+    version: "latest"
+  
+  # HTTP clients
+  - name: "requests"
+    version: "latest"
+  - name: "httpx"
+    version: "latest"
+  - name: "aiohttp"
+    version: "latest"
+  
+  # Browser automation
+  - name: "playwright"
+    version: "latest"
+  - name: "browsergym-core"
+    version: "==0.13.3"
+
+# System packages (apt)
+system_packages:
+  # Essential tools
+  essential:
+    - ca-certificates
+    - coreutils
+    - procps
+    - findutils
+    - build-essential
+    - software-properties-common
+    - curl
+    - wget
+    - gnupg
+    - apt-transport-https
+  
+  # Development tools
+  development:
+    - cmake
+    - cppcheck
+    - valgrind
+    - clang
+    - lldb
+    - llvm
+    - gdb
+    - git
+    - vim
+    - vim-doc
+  
+  # Libraries
+  libraries:
+    - libasound2-plugins
+    - libatomic1
+    - zlib1g
+    - libuuid1
+    - libunwind8
+    - tk-dev
+    - uuid-dev
+    - libsecret-1-dev
+    - libgdiplus
+    - libsqlite3-dev
+    - default-libmysqlclient-dev
+    - unixodbc-dev
+    - libpq-dev
+  
+  # Utilities
+  utilities:
+    - gettext
+    - inotify-tools
+    - moreutils
+    - jq
+    - rsync
+    - xtail
+    - ripgrep
+    - zip
+    - unzip
+    - unrar
+    - rar
+  
+  # Media tools
+  media:
+    - ffmpeg
+    - sqlite3
+
+# Node.js packages (global)
+nodejs_packages:
+  - npm
+  - yarn
+  - pnpm
+
+# User configuration
+user:
+  name: "agentbox"
+  uid: 1000
+  gid: 1000
+  home: "/home/agentbox"
+  shell: "/bin/bash"
+
+# Working directory
+workdir: "/workspace"
+
+# Playwright configuration
+playwright:
+  browsers:
+    - chromium
+    - firefox
+  install_deps: true

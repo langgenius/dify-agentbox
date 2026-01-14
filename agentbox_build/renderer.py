@@ -1,0 +1,57 @@
+from __future__ import annotations
+
+from pathlib import Path
+
+from jinja2 import Environment, FileSystemLoader
+
+
+def strip_shebang(text: str) -> str:
+    lines = text.splitlines()
+    if lines and lines[0].startswith("#!"):
+        lines = lines[1:]
+    return "\n".join(lines).strip() + "\n"
+
+
+def load_script(path: Path) -> str:
+    if not path.exists():
+        raise FileNotFoundError(f"Script not found: {path}")
+    return strip_shebang(path.read_text(encoding="utf-8"))
+
+
+def render_snippet(snippet: str, context: dict) -> str:
+    template = Environment().from_string(snippet)
+    return template.render(**context)
+
+
+def build_install_script(scripts_dir: Path, context: dict) -> str:
+    filenames = {
+        1: "01-install-system-packages.sh",
+        2: "02-install-languages.sh",
+        3: "03-install-python-packages.sh",
+        4: "04-install-nodejs-packages.sh",
+        5: "05-create-user.sh",
+        6: "06-configure-root.sh",
+    }
+    parts: list[str] = []
+    for idx in range(1, 7):
+        script_path = scripts_dir / filenames[idx]
+        rendered = render_snippet(load_script(script_path), context)
+        parts.append(rendered)
+    combined = "\n".join(parts)
+    return "RUN <<'EOF'\n" + combined + "EOF\n"
+
+
+def build_user_script(scripts_dir: Path, context: dict) -> str:
+    user_script = render_snippet(load_script(scripts_dir / "07-configure-user.sh"), context)
+    return "RUN <<'EOF'\n" + user_script + "EOF\n"
+
+
+def render_dockerfile(template_path: Path, output_path: Path, context: dict) -> None:
+    env = Environment(
+        loader=FileSystemLoader(template_path.parent),
+        trim_blocks=True,
+        lstrip_blocks=True,
+    )
+    template = env.get_template(template_path.name)
+    content = template.render(**context)
+    output_path.write_text(content, encoding="utf-8")
