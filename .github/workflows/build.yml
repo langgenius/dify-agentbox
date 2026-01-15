@@ -26,7 +26,7 @@ jobs:
       matrix:
         platform:
           - linux/amd64
-          - linux/arm64
+          # - linux/arm64
     
     steps:
       - name: Checkout code
@@ -86,14 +86,24 @@ jobs:
 
       - name: Build and push by digest
         id: build
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: .
+          tags: ${{ env.REGISTRY_IMAGE }}:build
           platforms: ${{ matrix.platform }}
           labels: ${{ steps.meta.outputs.labels }}
           outputs: type=image,name=${{ env.REGISTRY_IMAGE }},push-by-digest=true,name-canonical=true,push=${{ github.event_name != 'pull_request' }}
+          load: true
           cache-from: type=gha,scope=build-${{ matrix.platform }}
           cache-to: type=gha,mode=max,scope=build-${{ matrix.platform }}
+
+      - name: Verify language runtimes and packages
+        run: |
+          # Run the verification script inside the container
+          docker run --rm -v $(pwd)/test/bin:/test ${{ env.REGISTRY_IMAGE }}:build bash -c "\
+            bash /test/verify-languages.sh; \
+            bash /test/verify-packages.sh; \
+          "
 
       - name: Export digest
         if: github.event_name != 'pull_request'
