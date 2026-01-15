@@ -26,9 +26,9 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/[YOUR_ORG]/dify-agentbox"
-Repository = "https://github.com/[YOUR_ORG]/dify-agentbox"
-Issues = "https://github.com/[YOUR_ORG]/dify-agentbox/issues"
+Homepage = "https://github.com/langgenius/dify-agentbox"
+Repository = "https://github.com/langgenius/dify-agentbox"
+Issues = "https://github.com/langgenius/dify-agentbox/issues"
 
 [project.scripts]
 agentbox-build = "build:main"
