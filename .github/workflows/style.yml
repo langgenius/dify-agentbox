@@ -34,8 +34,7 @@ jobs:
       - name: Lint Dockerfile with super-linter
         uses: super-linter/super-linter/slim@v8
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_ALL_CODEBASE: false
           VALIDATE_DOCKERFILE_HADOLINT: true
-          DEFAULT_BRANCH: main
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # FILTER_REGEX_INCLUDE: Dockerfile
+          VALIDATE_YAML: true
