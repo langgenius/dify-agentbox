@@ -20,7 +20,8 @@ apt-get update && apt-get install -y --no-install-recommends \
     {% for pkg in system_packages.media -%}
     {{ pkg }} \
     {% endfor -%}
-    ruby-full ruby-dev
+    ruby-full \
+    ruby-dev
 
 apt-get clean
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
