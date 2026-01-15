@@ -28,25 +28,25 @@ micromamba:
 python_packages:
   # Data processing
   - name: "pandas[excel,html,xml]"
-    version: "~=2.2.3"
+    version: "~=2.3.3"
   - name: "numpy"
     version: "latest"
   
   # Document processing
   - name: "markdown"
-    version: ">=3.10"
+    version: "latest"
   - name: "xhtml2pdf"
-    version: "~=0.2.17"
+    version: "latest"
   - name: "python-pptx"
-    version: "~=1.0.2"
+    version: "latest"
   - name: "PyMuPDF"
-    version: "~=1.24.0"
-  - name: "pypandoc-binary"
-    version: "~=1.13"
+    version: "latest"
+  - name: "pypandoc-binary"   # shipping pypandoc with pandoc binary
+    version: "latest"
   
   # Image processing
   - name: "pillow"
-    version: "~=10.4.0"
+    version: "latest"
   
   # Utilities
   - name: "psutil"
@@ -99,6 +99,7 @@ system_packages:
     - git
     - vim
     - vim-doc
+    - pkg-config
   
   # Libraries
   libraries:
@@ -116,7 +117,7 @@ system_packages:
     - default-libmysqlclient-dev
     - unixodbc-dev
     - libpq-dev
-  
+
   # Utilities
   utilities:
     - gettext
