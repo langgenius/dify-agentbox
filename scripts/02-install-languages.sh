@@ -1,8 +1,6 @@
 #!/bin/bash
 set -ex
 
-echo "[agentbox] Step 2: install runtimes (miniconda/node/go/rust)"
-
 # Detect architecture (x86_64 or aarch64)
 ARCH=$(uname -m)
 case "$ARCH" in
@@ -41,5 +39,3 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --defaul
 # Cleanup
 apt-get clean
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-echo "[agentbox] Step 2 complete"

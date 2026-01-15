@@ -36,17 +36,27 @@ def build_install_script(scripts_dir: Path, context: dict) -> str:
     parts: list[str] = []
     for filename in filenames:
         script_path = scripts_dir / filename
+        step_number = filename.split("-")[0].lstrip("0")
+        step_name = filename.split("-", 1)[1].removesuffix(".sh").replace("-", " ")
         rendered = render_snippet(load_script(script_path), context)
         if not rendered.endswith("\n"):
             rendered += "\n"
-        parts.append("RUN <<'EOF'\n" + rendered + "EOF\n")
+        # Add step start and complete messages
+        wrapped_script = f"echo '[agentbox] Step {step_number}: {step_name}'\n"
+        wrapped_script += rendered
+        wrapped_script += f"echo '[agentbox] Step {step_number} complete'\n"
+        parts.append("RUN <<'EOF'\n" + wrapped_script + "EOF\n")
     return "\n".join(parts)
 
 def build_user_script(scripts_dir: Path, context: dict) -> str:
     user_script = render_snippet(load_script(scripts_dir / "07-configure-user.sh"), context)
     if not user_script.endswith("\n"):
         user_script += "\n"
-    return "RUN <<'EOF'\n" + user_script + "EOF\n"
+    # Add step start and complete messages
+    wrapped_script = "echo '[agentbox] Step 7: configure user'\n"
+    wrapped_script += user_script
+    wrapped_script += "echo '[agentbox] Step 7 complete'\n"
+    return "RUN <<'EOF'\n" + wrapped_script + "EOF\n"
 
 
 
