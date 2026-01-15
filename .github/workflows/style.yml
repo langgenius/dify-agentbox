@@ -32,7 +32,7 @@ jobs:
         run: uv run python build.py
 
       - name: Lint Dockerfile with super-linter
-        uses: super-linter/super-linter@v8
+        uses: super-linter/super-linter/slim@v8
         env:
           VALIDATE_ALL_CODEBASE: false
           VALIDATE_DOCKERFILE_HADOLINT: true
