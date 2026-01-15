@@ -4,7 +4,7 @@ set -ex
 echo "[agentbox] Step 1: install system packages"
 
 # Install all system packages
-apt-get update && apt-get install -y --no-install-recommends \
+apt-get update -q && apt-get install -y -q --no-install-recommends \
     {% for pkg in system_packages.essential -%}
     {{ pkg }} \
     {% endfor -%}
