@@ -25,17 +25,17 @@ def render_snippet(snippet: str, context: dict) -> str:
 
 
 def build_install_script(scripts_dir: Path, context: dict) -> str:
-    filenames = {
-        1: "01-install-system-packages.sh",
-        2: "02-install-languages.sh",
-        3: "03-install-python-packages.sh",
-        4: "04-install-nodejs-packages.sh",
-        5: "05-create-user.sh",
-        6: "06-configure-root.sh",
-    }
+    filenames = [
+        "01-install-system-packages.sh",
+        "02-install-languages.sh",
+        "03-install-python-packages.sh",
+        "04-install-nodejs-packages.sh",
+        "05-create-user.sh",
+        "06-configure-root.sh",
+    ]
     parts: list[str] = []
-    for idx in range(1, len(filenames) + 1):
-        script_path = scripts_dir / filenames[idx]
+    for filename in filenames:
+        script_path = scripts_dir / filename
         rendered = render_snippet(load_script(script_path), context)
         if not rendered.endswith("\n"):
             rendered += "\n"
