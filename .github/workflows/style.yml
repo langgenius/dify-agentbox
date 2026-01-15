@@ -38,4 +38,4 @@ jobs:
           VALIDATE_DOCKERFILE_HADOLINT: true
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          FILTER_REGEX_INCLUDE: Dockerfile
+          # FILTER_REGEX_INCLUDE: Dockerfile
