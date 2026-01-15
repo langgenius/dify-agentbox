@@ -34,7 +34,7 @@ def build_install_script(scripts_dir: Path, context: dict) -> str:
         6: "06-configure-root.sh",
     }
     parts: list[str] = []
-    for idx in range(1, 7):
+    for idx in range(1, len(filenames) + 1):
         script_path = scripts_dir / filenames[idx]
         rendered = render_snippet(load_script(script_path), context)
         if not rendered.endswith("\n"):
