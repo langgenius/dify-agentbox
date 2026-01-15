@@ -75,6 +75,14 @@ class SystemPackages(BaseModel):
     utilities: list[str]
     media: list[str]
 
+    def model_post_init(self, __context) -> None:
+        # Deduplicate and sort all system packages lists (case-insensitive, preserve original case)
+        self.essential = sorted(list(set(self.essential)), key=str.lower)
+        self.development = sorted(list(set(self.development)), key=str.lower)
+        self.libraries = sorted(list(set(self.libraries)), key=str.lower)
+        self.utilities = sorted(list(set(self.utilities)), key=str.lower)
+        self.media = sorted(list(set(self.media)), key=str.lower)
+
     model_config = ConfigDict(extra="ignore")
 
 
@@ -105,6 +113,16 @@ class VersionsConfig(BaseModel):
     user: UserConfig
     workdir: str
     playwright: PlaywrightConfig
+
+    def model_post_init(self, __context) -> None:
+        # Deduplicate and sort Python packages by name (case-insensitive, preserve original case)
+        seen_python_packages = {}
+        for pkg in self.python_packages:
+            seen_python_packages[pkg.name] = pkg
+        self.python_packages = sorted(seen_python_packages.values(), key=lambda x: x.name.lower())
+        
+        # Deduplicate and sort Node.js packages (case-insensitive, preserve original case)
+        self.nodejs_packages = sorted(list(set(self.nodejs_packages)), key=str.lower)
 
     model_config = ConfigDict(extra="ignore")
 
