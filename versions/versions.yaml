@@ -129,6 +129,13 @@ system_packages:
     - zip
     - unzip
     - unrar
+    - netcat-openbsd
+    - nmap
+    - tcpdump
+    - socat
+    - iperf3
+    - bind9-dnsutils
+    - traceroute
   
   # Media tools
   media:
