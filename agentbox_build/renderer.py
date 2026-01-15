@@ -37,11 +37,10 @@ def build_install_script(scripts_dir: Path, context: dict) -> str:
     for idx in range(1, 7):
         script_path = scripts_dir / filenames[idx]
         rendered = render_snippet(load_script(script_path), context)
-        parts.append(rendered)
-    combined = "\n".join(parts)
-    if not combined.endswith("\n"):
-        combined += "\n"
-    return "RUN <<'EOF'\n" + combined + "EOF\n"
+        if not rendered.endswith("\n"):
+            rendered += "\n"
+        parts.append("RUN <<'EOF'\n" + rendered + "EOF\n")
+    return "\n".join(parts)
 
 def build_user_script(scripts_dir: Path, context: dict) -> str:
     user_script = render_snippet(load_script(scripts_dir / "07-configure-user.sh"), context)
