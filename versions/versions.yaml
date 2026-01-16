@@ -11,7 +11,7 @@ languages:
     version: "3.12"
     pip_version: "latest"
   nodejs:
-    version: "22"  # LTS
+    version: "24"  # LTS
   go:
     version: "1.22"
   ruby:
