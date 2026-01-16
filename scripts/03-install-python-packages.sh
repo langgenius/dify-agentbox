@@ -4,12 +4,12 @@ set -ex
 echo "[agentbox] Step 3: install Python env and packages"
 
 # Create base environment with Python
-/opt/conda/bin/conda install -y -n base -c conda-forge \
+/opt/conda/bin/conda install -y -q -n base -c conda-forge \
     python={{ languages.python.version }} \
     pip
 
 # Install Python packages
-/opt/conda/bin/pip install --no-cache-dir \
+/opt/conda/bin/pip install --no-cache-dir -q \
 {% for pkg in python_packages -%}
 {% if pkg.version == "latest" -%}
     {{ pkg.name }} \
