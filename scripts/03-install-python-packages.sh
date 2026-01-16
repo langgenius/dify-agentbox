@@ -12,7 +12,7 @@ echo "[agentbox] Step 3: install Python env and packages"
 /opt/conda/bin/pip install --no-cache-dir -q \
 {% for pkg in python_packages -%}
 {% if pkg.version == "latest" -%}
-    {{ pkg.name }} \
+    "{{ pkg.name }}" \
 {% else -%}
     "{{ pkg.name }}{{ pkg.version }}" \
 {% endif -%}
