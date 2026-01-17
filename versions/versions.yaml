@@ -34,15 +34,15 @@ python_packages:
   
   # Document processing
   - name: "markdown"
-    version: "latest"
+    version: ">=3.10"
   - name: "xhtml2pdf"
-    version: "latest"
+    version: "~=0.2.17"
   - name: "python-pptx"
-    version: "latest"
+    version: "~=1.0.2"
   - name: "PyMuPDF"
-    version: "latest"
+    version: "~=1.26.7"
   - name: "pypandoc-binary"   # shipping pypandoc with pandoc binary
-    version: "latest"
+    version: "~=1.26.2"
   
   # Image processing
   - name: "pillow"
