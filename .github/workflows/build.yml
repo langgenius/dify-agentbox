@@ -100,9 +100,9 @@ jobs:
       - name: Verify language runtimes and packages
         run: |
           # Run the verification script inside the container
-          docker run --rm -v $(pwd)/test/bin:/test ${{ env.REGISTRY_IMAGE }}:build bash -c "\
-            bash /test/verify-languages.sh; \
-            bash /test/verify-packages.sh; \
+          docker run --rm -v $(pwd)/test/bin:/test/bin ${{ env.REGISTRY_IMAGE }}:build bash -c "\
+            /test/bin/verify-languages.sh; \
+            /test/bin/verify-packages.sh; \
           "
 
       - name: Export digest
