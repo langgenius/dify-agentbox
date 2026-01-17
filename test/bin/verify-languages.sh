@@ -30,7 +30,7 @@ verify_go() {
 
 verify_rust() {
     echo "Verifying Rust..."
-    rustc --version &&which rustc
+    rustc --version && which rustc
     cargo --version && which cargo
 }
 
