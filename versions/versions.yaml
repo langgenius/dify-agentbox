@@ -42,7 +42,7 @@ python_packages:
   - name: "PyMuPDF"
     version: "~=1.26.7"
   - name: "pypandoc-binary"   # shipping pypandoc with pandoc binary
-    version: "~=1.26.2"
+    version: "~=1.16.2"
   
   # Image processing
   - name: "pillow"
