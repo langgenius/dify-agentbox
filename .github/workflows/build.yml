@@ -89,7 +89,6 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          tags: ${{ env.REGISTRY_IMAGE }}:build
           platforms: ${{ matrix.platform }}
           labels: ${{ steps.meta.outputs.labels }}
           outputs: type=image,name=${{ env.REGISTRY_IMAGE }},push-by-digest=true,name-canonical=true,push=${{ github.event_name != 'pull_request' }}
@@ -100,7 +99,7 @@ jobs:
       - name: Verify language runtimes and packages
         run: |
           # Run the verification script inside the container
-          docker run --rm -v $(pwd)/test/bin:/test/bin ${{ env.REGISTRY_IMAGE }}:build bash -c "\
+          docker run --rm -v $(pwd)/test/bin:/test/bin ${{ steps.build.outputs.imageid }} bash -c "\
             /test/bin/verify-languages.sh; \
             /test/bin/verify-packages.sh; \
           "
