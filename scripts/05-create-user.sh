@@ -23,7 +23,9 @@ passwd -d root
 
 # Copy Rust environment to user
 cp -r /root/.cargo /home/{{ user.name }}/.cargo
+cp -r /root/.rustup /home/{{ user.name }}/.rustup
 chown -R {{ user.name }}:{{ user.name }} /home/{{ user.name }}/.cargo
+chown -R {{ user.name }}:{{ user.name }} /home/{{ user.name }}/.rustup
 
 # Create workspace
 mkdir -p {{ workdir }}
