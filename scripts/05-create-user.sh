@@ -1,8 +1,6 @@
 #!/bin/bash
 set -ex
 
-echo "[agentbox] Step 5: create non-root user"
-
 # Remove conflicting UID/GID if exists
 if getent passwd {{ user.uid }} >/dev/null 2>&1; then 
     userdel -r $(getent passwd {{ user.uid }} | cut -d: -f1)
@@ -30,5 +28,3 @@ chown -R {{ user.name }}:{{ user.name }} /home/{{ user.name }}/.rustup
 # Create workspace
 mkdir -p {{ workdir }}
 chown -R {{ user.name }}:{{ user.name }} {{ workdir }}
-
-echo "[agentbox] Step 5 complete"

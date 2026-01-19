@@ -25,29 +25,38 @@ def render_snippet(snippet: str, context: dict) -> str:
 
 
 def build_install_script(scripts_dir: Path, context: dict) -> str:
-    filenames = {
-        1: "01-install-system-packages.sh",
-        2: "02-install-languages.sh",
-        3: "03-install-python-packages.sh",
-        4: "04-install-nodejs-packages.sh",
-        5: "05-create-user.sh",
-        6: "06-configure-root.sh",
-    }
+    filenames = [
+        "01-install-system-packages.sh",
+        "02-install-languages.sh",
+        "03-install-python-packages.sh",
+        "04-install-nodejs-packages.sh",
+        "05-create-user.sh",
+        "06-configure-root.sh",
+    ]
     parts: list[str] = []
-    for idx in range(1, 7):
-        script_path = scripts_dir / filenames[idx]
+    for filename in filenames:
+        script_path = scripts_dir / filename
+        step_number = filename.split("-")[0].lstrip("0")
+        step_name = filename.split("-", 1)[1].removesuffix(".sh").replace("-", " ")
         rendered = render_snippet(load_script(script_path), context)
-        parts.append(rendered)
-    combined = "\n".join(parts)
-    if not combined.endswith("\n"):
-        combined += "\n"
-    return "RUN <<'EOF'\n" + combined + "EOF\n"
+        if not rendered.endswith("\n"):
+            rendered += "\n"
+        # Add step start and complete messages
+        wrapped_script = f"echo '[agentbox] Step {step_number}: {step_name}'\n"
+        wrapped_script += rendered
+        wrapped_script += f"echo '[agentbox] Step {step_number} complete'\n"
+        parts.append("RUN <<'EOF'\n" + wrapped_script + "EOF\n")
+    return "\n".join(parts)
 
 def build_user_script(scripts_dir: Path, context: dict) -> str:
     user_script = render_snippet(load_script(scripts_dir / "07-configure-user.sh"), context)
     if not user_script.endswith("\n"):
         user_script += "\n"
-    return "RUN <<'EOF'\n" + user_script + "EOF\n"
+    # Add step start and complete messages
+    wrapped_script = "echo '[agentbox] Step 7: configure user'\n"
+    wrapped_script += user_script
+    wrapped_script += "echo '[agentbox] Step 7 complete'\n"
+    return "RUN <<'EOF'\n" + wrapped_script + "EOF\n"
 
 
 
