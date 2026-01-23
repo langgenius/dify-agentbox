@@ -137,6 +137,7 @@ system_packages:
     - iperf3
     - bind9-dnsutils
     - traceroute
+    - socat
   
   # Media tools
   media:
