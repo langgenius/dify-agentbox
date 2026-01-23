@@ -48,6 +48,14 @@ jobs:
       - name: Render Dockerfile
         run: uv run python build.py
 
+      - name: Clean up disk spaces
+        run: |
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /opt/ghc
+          sudo rm -rf /usr/local/share/boost
+          sudo rm -rf /usr/lib/jvm
+
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v5
