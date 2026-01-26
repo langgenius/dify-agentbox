@@ -37,8 +37,10 @@ agentbox-build = "build:main"
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
-[tool.uv]
-dev-dependencies = []
+[dependency-groups]
+dev = [
+    "ruff"
+]
 
 [tool.hatch.build.targets.wheel]
 packages = ["."]

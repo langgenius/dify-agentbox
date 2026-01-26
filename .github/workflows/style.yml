@@ -1,4 +1,4 @@
-name: Style Check for Dockerfile
+name: Style Check
 
 on:
   push:
@@ -27,6 +27,9 @@ jobs:
         with:
           enable-cache: true
           python-version: '3.11'
+      
+      - name: Lint Python Code
+        run: dev/reformat
       
       - name: Render Dockerfile
         run: uv run python build.py

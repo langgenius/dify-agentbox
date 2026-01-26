@@ -48,8 +48,11 @@ def build_install_script(scripts_dir: Path, context: dict) -> str:
         parts.append("RUN <<'EOF'\n" + wrapped_script + "EOF\n")
     return "\n".join(parts)
 
+
 def build_user_script(scripts_dir: Path, context: dict) -> str:
-    user_script = render_snippet(load_script(scripts_dir / "07-configure-user.sh"), context)
+    user_script = render_snippet(
+        load_script(scripts_dir / "07-configure-user.sh"), context
+    )
     if not user_script.endswith("\n"):
         user_script += "\n"
     # Add step start and complete messages
@@ -57,7 +60,6 @@ def build_user_script(scripts_dir: Path, context: dict) -> str:
     wrapped_script += user_script
     wrapped_script += "echo '[agentbox] Step 7 complete'\n"
     return "RUN <<'EOF'\n" + wrapped_script + "EOF\n"
-
 
 
 def render_dockerfile(template_path: Path, output_path: Path, context: dict) -> None:
