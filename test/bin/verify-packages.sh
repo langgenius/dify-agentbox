@@ -13,7 +13,7 @@ verify_playwright() {
         echo "Running Playwright test script..."
         python3 /test/bin/test_playwright.py
         return $?
-    endif
+    fi
 }
 
 echo "[agentbox] Verifying packages..."
