@@ -3,17 +3,10 @@ set -ex
 
 verify_playwright() {
     echo "Verifying Playwright..."
-    if command -v playwright &> /dev/null; then
-        playwright --version && which playwright
-    else
-        echo "Playwright not found, skipping verification"
-    fi
+    playwright --version && which playwright
 
-    if command -v python3 &> /dev/null; then
-        echo "Running Playwright test script..."
-        python3 /test/bin/test_playwright.py
-        return $?
-    fi
+    echo "Running Playwright test script..."
+    python3 /test/bin/test_playwright.py
 }
 
 echo "[agentbox] Verifying packages..."
