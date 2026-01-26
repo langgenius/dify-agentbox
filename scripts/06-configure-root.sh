@@ -18,6 +18,9 @@ export PLAYWRIGHT_BROWSERS_PATH=/opt/playwright-browsers
 mkdir -p /opt/playwright-browsers
 /opt/conda/bin/playwright install --with-deps {{ playwright.browsers | join(' ') }}
 
+# Install Playwright browsers
+/opt/conda/bin/browser-use install
+
 # Set proper permissions for shared access
 chmod -R 755 /opt/playwright-browsers
 
