@@ -50,9 +50,7 @@ def build_install_script(scripts_dir: Path, context: dict) -> str:
 
 
 def build_user_script(scripts_dir: Path, context: dict) -> str:
-    user_script = render_snippet(
-        load_script(scripts_dir / "07-configure-user.sh"), context
-    )
+    user_script = render_snippet(load_script(scripts_dir / "07-configure-user.sh"), context)
     if not user_script.endswith("\n"):
         user_script += "\n"
     # Add step start and complete messages

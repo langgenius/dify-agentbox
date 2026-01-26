@@ -1,0 +1,12 @@
+line-length = 120
+exclude = [
+]
+
+
+[lint]
+select = [
+    "E",
+    "UP",
+    "E402",
+    "F401",
+]

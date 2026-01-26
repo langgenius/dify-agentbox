@@ -119,9 +119,7 @@ class VersionsConfig(BaseModel):
         seen_python_packages = {}
         for pkg in self.python_packages:
             seen_python_packages[pkg.name] = pkg
-        self.python_packages = sorted(
-            seen_python_packages.values(), key=lambda x: x.name.lower()
-        )
+        self.python_packages = sorted(seen_python_packages.values(), key=lambda x: x.name.lower())
 
         # Deduplicate and sort Node.js packages (case-insensitive, preserve original case)
         self.nodejs_packages = sorted(list(set(self.nodejs_packages)), key=str.lower)
@@ -133,20 +131,10 @@ class BuildSettings(BaseSettings):
     """Configuration for rendering the Dockerfile."""
 
     root_dir: Path = Field(default_factory=lambda: Path(__file__).parent.parent)
-    versions_file: Path = Field(
-        default_factory=lambda: Path(__file__).parent.parent
-        / "versions"
-        / "versions.yaml"
-    )
-    template_file: Path = Field(
-        default_factory=lambda: Path(__file__).parent.parent / "Dockerfile.j2"
-    )
-    output_file: Path = Field(
-        default_factory=lambda: Path(__file__).parent.parent / "Dockerfile"
-    )
-    scripts_dir: Path = Field(
-        default_factory=lambda: Path(__file__).parent.parent / "scripts"
-    )
+    versions_file: Path = Field(default_factory=lambda: Path(__file__).parent.parent / "versions" / "versions.yaml")
+    template_file: Path = Field(default_factory=lambda: Path(__file__).parent.parent / "Dockerfile.j2")
+    output_file: Path = Field(default_factory=lambda: Path(__file__).parent.parent / "Dockerfile")
+    scripts_dir: Path = Field(default_factory=lambda: Path(__file__).parent.parent / "scripts")
 
     model_config = SettingsConfigDict(env_prefix="AGENTBOX_", env_nested_delimiter="__")
 
