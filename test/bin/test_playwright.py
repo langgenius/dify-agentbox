@@ -3,7 +3,7 @@
 Playwright test script to verify browser functionality.
 This script loads a local HTML file and verifies its content.
 """
-
+import logging
 import sys
 import os
 from playwright.sync_api import sync_playwright
@@ -72,7 +72,7 @@ def test_playwright_html():
             return 0
             
     except Exception as e:
-        print(f"Error during Playwright test: {str(e)}")
+        logging.exception(f"Error during Playwright test: {str(e)}")
         return 1
 
 
