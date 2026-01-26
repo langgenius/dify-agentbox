@@ -120,7 +120,7 @@ class VersionsConfig(BaseModel):
         for pkg in self.python_packages:
             seen_python_packages[pkg.name] = pkg
         self.python_packages = sorted(seen_python_packages.values(), key=lambda x: x.name.lower())
-        
+
         # Deduplicate and sort Node.js packages (case-insensitive, preserve original case)
         self.nodejs_packages = sorted(list(set(self.nodejs_packages)), key=str.lower)
 
