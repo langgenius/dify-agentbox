@@ -5,7 +5,11 @@ verify_python() {
     echo "Verifying Python..."
     python --version && which python
     pip --version && which pip
-    conda --version && which conda
+    if command -v conda &> /dev/null; then
+        conda --version && which conda
+    else
+        echo "Conda not found, skipping..."
+    fi
 }
 
 verify_nodejs() {
@@ -34,11 +38,18 @@ verify_rust() {
     cargo --version && which cargo
 }
 
+verify_ruby() {
+    echo "Verifying Ruby..."
+    ruby --version && which ruby
+    gem --version && which gem
+}
+
 echo "[agentbox] Verifying language environments..."
 
 verify_python
 verify_nodejs
 verify_go
 verify_rust
+verify_ruby
 
 echo "[agentbox] All language environments verified successfully!"
