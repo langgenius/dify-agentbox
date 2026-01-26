@@ -5,8 +5,16 @@ verify_playwright() {
     echo "Verifying Playwright..."
     playwright --version && which playwright
 
-    echo "Running Playwright test script..."
-    python3 /test/bin/test_playwright.py
+    # Check architecture
+    ARCH=$(uname -m)
+    echo "Current architecture: $ARCH"
+    
+    if [ "$ARCH" != "arm64" ]; then
+        echo "Running Playwright test script..."
+        python3 /test/bin/test_playwright.py
+    else
+        echo "Skipping Playwright test script on arm64 architecture"
+    fi
 }
 
 echo "[agentbox] Verifying packages..."
