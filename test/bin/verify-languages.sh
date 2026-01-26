@@ -5,11 +5,6 @@ verify_python() {
     echo "Verifying Python..."
     python --version && which python
     pip --version && which pip
-    if command -v conda &> /dev/null; then
-        conda --version && which conda
-    else
-        echo "Conda not found, skipping..."
-    fi
 }
 
 verify_nodejs() {
