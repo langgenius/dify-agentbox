@@ -8,6 +8,12 @@ verify_playwright() {
     else
         echo "Playwright not found, skipping verification"
     fi
+
+    if command -v python3 &> /dev/null; then
+        echo "Running Playwright test script..."
+        python3 /test/bin/test_playwright.py
+        return $?
+    endif
 }
 
 echo "[agentbox] Verifying packages..."
