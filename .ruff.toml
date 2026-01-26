@@ -6,7 +6,6 @@ exclude = [
 [lint]
 select = [
     "E",
+    "F",
     "UP",
-    "E402",
-    "F401",
 ]
