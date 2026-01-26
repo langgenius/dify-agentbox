@@ -13,7 +13,7 @@ def test_playwright_html():
     """
     Test Playwright by loading a local HTML file and verifying its content.
     """
-    html_file_path = "/test/test.html"
+    html_file_path = "/test/resources/example_playwright_input.html"
     
     # Check if HTML file exists
     if not os.path.exists(html_file_path):
