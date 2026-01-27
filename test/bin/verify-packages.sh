@@ -11,7 +11,7 @@ verify_playwright() {
     
     if [ "$ARCH" != "arm64" ]; then
         echo "Running Playwright test script..."
-        python /test/bin/resources/test_playwright.py
+        python /test/resources/test_playwright.py
     else
         echo "Skipping Playwright test script on arm64 architecture"
     fi
