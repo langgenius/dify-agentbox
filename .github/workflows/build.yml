@@ -108,7 +108,7 @@ jobs:
       - name: Verify language runtimes and packages
         run: |
           # Run the verification script inside the container
-          docker run --rm -v $(pwd)/test/bin:/test/bin ${{ steps.build.outputs.imageid }} bash -c "\
+          docker run --rm -v $(pwd)/test:/test ${{ steps.build.outputs.imageid }} bash -c "\
             /test/bin/verify-languages.sh; \
             /test/bin/verify-packages.sh; \
           "

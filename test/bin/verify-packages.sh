@@ -3,10 +3,17 @@ set -ex
 
 verify_playwright() {
     echo "Verifying Playwright..."
-    if command -v playwright &> /dev/null; then
-        playwright --version && which playwright
+    playwright --version && which playwright
+
+    # Check architecture
+    ARCH=$(uname -m)
+    echo "Current architecture: $ARCH"
+    
+    if [ "$ARCH" != "arm64" ]; then
+        echo "Running Playwright test script..."
+        python /test/resources/test_playwright.py
     else
-        echo "Playwright not found, skipping verification"
+        echo "Skipping Playwright test script on arm64 architecture"
     fi
 }
 
