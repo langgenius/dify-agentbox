@@ -86,6 +86,7 @@ system_packages:
     - wget
     - gnupg
     - apt-transport-https
+    - openssh-server
   
   # Development tools
   development:
