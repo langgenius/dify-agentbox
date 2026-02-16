@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Change to the directory where this script is located (project root)
+cd "$(dirname "$(dirname "$0")")"
+
+# Reformat code using ruff
+uv run ruff format .
+
+# Lint code using ruff
+uv run ruff check .
