@@ -92,23 +92,44 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Build local image for verification
+        if: github.event_name == 'pull_request'
+        id: build-pr
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          platforms: ${{ matrix.platform }}
+          labels: ${{ steps.meta.outputs.labels }}
+          load: true
+          cache-from: type=gha,scope=build-${{ matrix.platform }}
+          cache-to: type=gha,mode=max,scope=build-${{ matrix.platform }}
+
+      - name: Verify language runtimes and packages
+        if: github.event_name == 'pull_request'
+        run: |
+          # Run the verification script inside the container
+          docker run --rm --platform ${{ matrix.platform }} -v $(pwd)/test/bin:/test/bin ${{ steps.build-pr.outputs.imageid }} bash -c "\
+            /test/bin/verify-languages.sh; \
+            /test/bin/verify-packages.sh; \
+          "
+
       - name: Build and push by digest
+        if: github.event_name != 'pull_request'
         id: build
         uses: docker/build-push-action@v6
         with:
           context: .
           platforms: ${{ matrix.platform }}
           labels: ${{ steps.meta.outputs.labels }}
-          outputs: |
-            type=image,name=${{ env.REGISTRY_IMAGE }},push-by-digest=true,name-canonical=true,push=${{ github.event_name != 'pull_request' }}
-            type=docker
+          outputs: type=image,name=${{ env.REGISTRY_IMAGE }},push-by-digest=true,name-canonical=true,push=true
           cache-from: type=gha,scope=build-${{ matrix.platform }}
           cache-to: type=gha,mode=max,scope=build-${{ matrix.platform }}
 
       - name: Verify language runtimes and packages
+        if: github.event_name != 'pull_request'
         run: |
-          # Run the verification script inside the container
-          docker run --rm -v $(pwd)/test/bin:/test/bin ${{ steps.build.outputs.imageid }} bash -c "\
+          # Run the verification script inside the pushed digest image
+          docker run --rm --platform ${{ matrix.platform }} -v $(pwd)/test/bin:/test/bin ${{ env.REGISTRY_IMAGE }}@${{ steps.build.outputs.digest }} bash -c "\
             /test/bin/verify-languages.sh; \
             /test/bin/verify-packages.sh; \
           "
