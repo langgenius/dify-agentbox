@@ -108,7 +108,7 @@ jobs:
         if: github.event_name == 'pull_request'
         run: |
           # Run the verification script inside the container
-          docker run --rm -v $(pwd)/test/bin:/test/bin ${{ steps.build-pr.outputs.imageid }} bash -c "\
+          docker run --rm --platform ${{ matrix.platform }} -v $(pwd)/test/bin:/test/bin ${{ steps.build-pr.outputs.imageid }} bash -c "\
             /test/bin/verify-languages.sh; \
             /test/bin/verify-packages.sh; \
           "
@@ -129,7 +129,7 @@ jobs:
         if: github.event_name != 'pull_request'
         run: |
           # Run the verification script inside the pushed digest image
-          docker run --rm -v $(pwd)/test/bin:/test/bin ${{ env.REGISTRY_IMAGE }}@${{ steps.build.outputs.digest }} bash -c "\
+          docker run --rm --platform ${{ matrix.platform }} -v $(pwd)/test/bin:/test/bin ${{ env.REGISTRY_IMAGE }}@${{ steps.build.outputs.digest }} bash -c "\
             /test/bin/verify-languages.sh; \
             /test/bin/verify-packages.sh; \
           "
