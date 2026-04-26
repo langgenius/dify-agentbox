@@ -20,7 +20,7 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: depot-ubuntu-24.04-4
     strategy:
       fail-fast: true
       matrix:
@@ -151,7 +151,7 @@ jobs:
           retention-days: 1
 
   merge:
-    runs-on: ubuntu-latest
+    runs-on: depot-ubuntu-24.04
     if: github.event_name != 'pull_request'
     needs:
       - build
