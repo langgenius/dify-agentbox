@@ -69,6 +69,8 @@ python_packages:
   # Browser automation
   - name: "playwright"
     version: "latest"
+  - name: "browser-use"
+    version: "latest"
   - name: "browsergym-core"
     version: "==0.13.3"
 
